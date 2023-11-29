@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p>
+        #include (stdio.h)</br>
+            #include (stdlib.h)</br>
+            
+            struct Node {</br>
+                int data;</br>
+                struct Node* next;</br>
+            };</br>
+            
+            void traversalelem(struct Node* ptr) {</br>
+                while (ptr != NULL) {</br>
+                    printf("Element: %d\n", ptr->data);</br>
+                    ptr = ptr->next;</br>
+                }</br>
+            }</br>
+            
+            struct Node* insertatfirst(struct Node* head, int data) {</br>
+                struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));</br>
+                ptr->next = head;</br>
+                ptr->data = data;</br>
+                return ptr;</br>
+            }</br>
+            
+            struct Node* insertatindex(struct Node* head, int data, int index) {</br>
+                struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));</br>
+                struct Node* p = head;</br>
+                int i = 0;</br>
+                while (i != index - 1) {</br>
+                    p = p->next;</br>
+                    i++;</br>
+                }</br>
+                ptr->data = data;</br>
+                ptr->next = p->next;</br>
+                p->next = ptr;</br>
+                return head;</br>
+            }</br>
+            
+            struct Node* insertatend(struct Node* head, int data) {</br>
+                struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));</br>
+                ptr->data = data;</br>
+                ptr->next = NULL;</br>
+                struct Node* p = head;</br>
+                while (p->next != NULL) {</br>
+                    p = p->next;</br>
+                }</br>
+                p->next = ptr;</br>
+                return head;</br>
+            }</br>
+            
+            struct Node* insertafternode(struct Node* head, struct Node* prevnode, int data) {</br>
+                struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));</br>
+                ptr->data = data;</br>
+                ptr->next = prevnode->next;</br>
+                prevnode->next = ptr;</br>
+                return head;</br>
+            }</br>
+            struct Node* deleteatfirst(struct Node* head) {</br>
+                if (head == NULL) {</br>
+                    printf("The list is empty. Cannot delete from an empty list.\n");</br>
+                    return NULL;</br>
+                }</br>
+            
+                struct Node* ptr = head;</br>
+                head = head->next;</br>
+                free(ptr);</br>
+                return head;</br>
+            }</br>
+            
+            struct Node* deleteatindex(struct Node* head, int index) {</br>
+                if (head == NULL) {</br>
+                    printf("The list is empty. Cannot delete from an empty list.\n");</br>
+                    return NULL;</br>
+                }</br>
+            
+                if (index < 0) {</br>
+                    printf("Invalid index. Index must be non-negative.\n");</br>
+                    return head;</br>
+                }</br>
+            
+                if (index == 0) {</br>
+                    return deleteatfirst(head);</br>
+                }</br>
+            
+                struct Node* p = head;</br>
+                struct Node* q = head->next;</br>
+            
+                int i;</br>
+                for (i = 0; i < index - 1 && q != NULL; i++) {</br>
+                    p = p->next;</br>
+                    q = q->next;</br>
+                }</br>
+            
+                if (q == NULL) {</br>
+                    printf("Invalid index. Node not found at index %d.\n", index);</br>
+                } else {</br>
+                    p->next = q->next;</br>
+                    free(q);</br>
+                }</br>
+            
+                return head;</br>
+            }</br>
+            
+            struct Node* deleteatend(struct Node* head) {</br>
+                if (head == NULL) {</br>
+                    printf("The list is empty. Cannot delete from an empty list.\n");</br>
+                    return NULL;</br>
+                }</br>
+            
+                if (head->next == NULL) {</br>
+                    free(head);</br>
+                    return NULL;</br>
+                }</br>
+            
+                struct Node* p = head;</br>
+                struct Node* q = head->next;</br>
+            
+                while (q->next != NULL) {</br>
+                    p = p->next;</br>
+                    q = q->next;</br>
+                }</br>
+            
+                p->next = NULL;</br>
+                free(q);</br>
+                return head;</br>
+            }</br>
+            
+            struct Node* deleteforavalue(struct Node* head, int value) {</br>
+                if (head == NULL) {</br>
+                    printf("The list is empty. Cannot delete from an empty list.\n");</br>
+                    return NULL;</br>
+                }</br>
+            
+                struct Node* p = head;</br>
+                struct Node* q = head->next;</br>
+            
+                if (p->data == value) {</br>
+                    return deleteatfirst(head);</br>
+                }</br>
+            
+                while (q != NULL && q->data != value) {</br>
+                    p = p->next;</br>
+                    q = q->next;</br>
+                }</br>
+            
+                if (q != NULL) {</br>
+                    p->next = q->next;</br>
+                    free(q);</br>
+                } else {</br>
+                    printf("Value %d not found in the list.\n", value);</br>
+                }</br>
+            
+                return head;</br>
+            }</br>
+            int main() {</br>
+                struct Node* head = NULL;</br>
+                int choice;</br>
+                int data, index,value;</br>
+            
+                while (1) {</br>
+                    printf("\nLinked List Menu:\n");</br>
+                    printf("1. Insert at the beginning\n");</br>
+                    printf("2. Insert at any given index\n");</br>
+                    printf("3. Insert at the end\n");</br>
+                    printf("4. Insert after a specific node\n");</br>
+                    printf("5. Delete the first node\n");</br>
+                    printf("6. Delete a node at a specific index\n");</br>
+                    printf("7. Delete the last node\n");</br>
+                    printf("8. Delete nodes with a specific value\n");</br>
+                    printf("9. Print elements\n");</br>
+                    printf("10. Exit\n");</br>
+                    printf("Enter your choice: ");</br>
+                    scanf("%d", &choice);</br>
+            
+                    switch (choice) {</br>
+                        case 1:</br>
+                            printf("Enter data to insert at the beginning: ");</br>
+                            scanf("%d", &data);</br>
+                            head = insertatfirst(head, data);</br>
+                            break;</br>
+                        case 2:</br>
+                            printf("Enter data to insert: ");</br>
+                            scanf("%d", &data);</br>
+                            printf("Enter index to insert at: ");</br>
+                            scanf("%d", &index);</br>
+                            head = insertatindex(head, data, index);</br>
+                            break;</br>
+                        case 3:</br>
+                            printf("Enter data to insert at the end: ");</br>
+                            scanf("%d", &data);</br>
+                            head = insertatend(head, data);</br>
+                            break;</br>
+                        case 4:</br>
+                            printf("Enter data to insert: ");</br>
+                            scanf("%d", &data);</br>
+                            printf("Enter data of the node after which you want to insert: ");</br>
+                            scanf("%d", &index);</br>
+                            struct Node* prev = head;</br>
+                            while (prev != NULL && prev->data != index) {</br>
+                                prev = prev->next;</br>
+                            }</br>
+                            if (prev == NULL) {</br>
+                                printf("Node with data %d not found!\n", index);</br>
+                            } else {</br>
+                                head = insertafternode(head, prev, data);</br>
+                            }</br>
+                            break;</br>
+                        case 5:</br>
+                            head = deleteatfirst(head);</br>
+                            break;</br>
+                        case 6:</br>
+                            printf("Enter index to delete: ");</br>
+                            scanf("%d", &index);</br>
+                            head = deleteatindex(head, index);</br>
+                            break;</br>
+                        case 7:</br>
+                            head = deleteatend(head);</br>
+                            break;</br>
+                        case 8:</br>
+                            printf("Enter value to delete: ");</br>
+                            scanf("%d", &value);</br>
+                            head = deleteforavalue(head, value);</br>
+                            break;</br>
+                        case 9:</br>
+                            printf("Linked List elements:\n");</br>
+                            traversalelem(head);</br>
+                            break;</br>
+                        case 10:</br>
+                            exit(0);</br>
+                        default:</br>
+                            printf("Invalid choice! Please enter a valid option.\n");</br>
+                    }</br>
+                }</br>
+            
+                return 0;</br>
+            }
+    </p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        #include (stdio.h)</br>
+            #include (stdlib.h)</br>
+            
+            struct queue {</br>
+                int size;</br>
+                int* arr;</br>
+                int r;</br>
+                int f;</br>
+            };</br>
+            
+            int isFull(struct queue* q) {</br>
+                if (q->r == q->size - 1) {</br>
+                    return 1;</br>
+                }</br>
+                return 0;</br>
+            }</br>
+            
+            int isEmpty(struct queue* q) {</br>
+                if (q->r == q->f) {</br>
+                    return 1;</br>
+                } else {</br>
+                    return 0;</br>
+                }</br>
+            }</br>
+            
+            void enqueue(struct queue* q, int val) {</br>
+                if (isFull(q)) {</br>
+                    printf("Queue is full\n");</br>
+                } else {</br>
+                    q->r++;</br>
+                    q->arr[q->r] = val;</br>
+                }</br>
+            }</br>
+            
+            int dequeue(struct queue* q) {</br>
+                int a = -1;</br>
+                if (isEmpty(q)) {</br>
+                    printf("Queue is empty\n");</br>
+                } else {</br>
+                    q->f++;</br>
+                    a = q->arr[q->f];</br>
+                }</br>
+                return a;</br>
+            }</br>
+            
+            void traverse(struct queue* q) {</br>
+                if (isEmpty(q)) {</br>
+                    printf("Queue is empty\n");</br>
+                    return;</br>
+                }</br>
+            
+                printf("Queue elements:\n");</br>
+                for (int i = q->f + 1; i <= q->r; i++) {</br>
+                    printf("%d ", q->arr[i]);</br>
+                }</br>
+                printf("\n");</br>
+            }</br>
+            
+            int main() {</br>
+                struct queue q;</br>
+                q.size = 20;</br>
+                q.r = -1;</br>
+                q.f = -1;</br>
+                q.arr = (int*)malloc(q.size * sizeof(int));</br>
+            
+                int choice, element;</br>
+            
+                while (1) {</br>
+                    printf("\nQueue Menu:\n");</br>
+                    printf("1. Enqueue\n");</br>
+                    printf("2. Dequeue\n");</br>
+                    printf("3. Check if the queue is empty\n");</br>
+                    printf("4. Check if the queue is full\n");</br>
+                    printf("5. Traverse the queue\n");</br>
+                    printf("6. Exit\n");</br>
+                    printf("Enter your choice: ");</br>
+                    scanf("%d", &choice);</br>
+            
+                    switch (choice) {</br>
+                        case 1:</br>
+                            printf("Enter element to enqueue: ");</br>
+                            scanf("%d", &element);</br>
+                            enqueue(&q, element);</br>
+                            break;</br>
+                        case 2:</br>
+                            element = dequeue(&q);</br>
+                            if (element != -1) {</br>
+                                printf("Dequeued element: %d\n", element);</br>
+                            }</br>
+                            break;</br>
+                        case 3:</br>
+                            if (isEmpty(&q)) {</br>
+                                printf("Queue is empty.\n");</br>
+                            } else {</br>
+                                printf("Queue is not empty.\n");</br>
+                            }</br>
+                            break;</br>
+                        case 4:</br>
+                            if (isFull(&q)) {</br>
+                                printf("Queue is full.\n");</br>
+                            } else {</br>
+                                printf("Queue is not full.\n");</br>
+                            }</br>
+                            break;</br>
+                        case 5:</br>
+                            traverse(&q);</br>
+                            break;</br>
+                        case 6:</br>
+                            free(q.arr);</br>
+                            exit(0);</br>
+                        default:</br>
+                            printf("Invalid choice! Please enter a valid option.\n");</br>
+                    }</br>
+                }</br>
+            
+                return 0;</br>
+            }</br>
+            
+
+    </p>
+</body>
+</html>

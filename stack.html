@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        #include(stdio.h)</br>
+            #include(stdlib.h)</br>
+            
+            struct stack {</br>
+                int size;</br>
+                int top;</br>
+                int * arr;</br>
+            };</br>
+            
+            int isFull(struct stack * ptr) {</br>
+                if (ptr->top == ptr->size - 1) {</br>
+                    return 1;</br>
+                } else {</br>
+                    return 0;</br>
+                }</br>
+            }</br>
+            
+            int isEmpty(struct stack * ptr) {</br>
+                if (ptr->top == -1) {</br>
+                    return 1;</br>
+                } else {</br>
+                    return 0;</br>
+                }</br>
+            }</br>
+            
+            void push(struct stack * ptr, int val) {</br>
+                if (isFull(ptr)) {</br>
+                    printf("Stack overflow\n");</br>
+                } else {</br>
+                    ptr->top++;</br>
+                    ptr->arr[ptr->top] = val;</br>
+                }</br>
+            }</br>
+            
+            int pop(struct stack * ptr) {</br>
+                if (isEmpty(ptr)) {</br>
+                    printf("Stack underflow\n");</br>
+                    return -1; // Return a sentinel value indicating an error</br>
+                } else {</br>
+                    int val = ptr->arr[ptr->top];</br>
+                    ptr->top--;</br>
+                    return val;</br>
+                }</br>
+            }</br>
+            
+            int peek(struct stack * ptr, int i) {</br>
+                int arrindex = ptr->top - i + 1;</br>
+                if (arrindex < 0) {</br>
+                    printf("No element\n");</br>
+                    return -1; // Return a sentinel value indicating an error</br>
+                } else {</br>
+                    return(ptr->arr[arrindex]);</br>
+                }</br>
+            }</br>
+            
+            void traverse(struct stack * ptr) {</br>
+                if (isEmpty(ptr)) {</br>
+                    printf("Stack is empty\n");</br>
+                } else {</br>
+                    printf("Stack elements:\n");</br>
+                    for (int i = 0; i <= ptr->top; i++) {</br>
+                        printf("%d ", ptr->arr[i]);</br>
+                    }</br>
+                    printf("\n");</br>
+                }</br>
+            }</br>
+            
+            int main() {</br>
+                struct stack* sp = (struct stack *)malloc(sizeof(struct stack));</br>
+                sp->size = 10;</br>
+                sp->top = -1;</br>
+                sp->arr = (int*)malloc(sp->size * sizeof(int));</br>
+            
+                int choice, element;</br>
+            
+                while (1) {</br>
+                    printf("Choose an operation:\n");</br>
+                    printf("1. Push\n");</br>
+                    printf("2. Pop\n");</br>
+                    printf("3. Traverse\n");</br>
+                    printf("4. Exit\n");</br>
+                    scanf("%d", &choice);</br>
+            
+                    switch (choice) {</br>
+                        case 1:</br>
+                            printf("Enter the element to push: ");</br>
+                            scanf("%d", &element);</br>
+                            push(sp, element);</br>
+                            break;</br>
+                        case 2:</br>
+                            printf("Popped %d from the stack\n", pop(sp));</br>
+                            break;</br>
+                        case 3:</br>
+                            traverse(sp);</br>
+                            break;</br>
+                        case 4:</br>
+                            free(sp->arr); // Free the memory allocated for the stack</br>
+                            free(sp);</br>
+                            exit(0);</br>
+                        default:</br>
+                            printf("Invalid choice, please try again\n");</br>
+                    }</br>
+                }</br>
+            
+                return 0;</br>
+            }</br>
+            
+    </p>
+    
+</body>
+</html>

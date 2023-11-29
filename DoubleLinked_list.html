@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        #include (stdio.h)</br>
+            #include (stdlib.h)</br>
+            
+            struct Node {</br>
+                int data;</br>
+                struct Node* prev;</br>
+                struct Node* next;</br>
+            };</br>
+            
+            struct Node* createNode(int data) {</br>
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));</br>
+                newNode->data = data;</br>
+                newNode->prev = NULL;</br>
+                newNode->next = NULL;</br>
+                return newNode;</br>
+            }</br>
+            
+            void insertAtEnd(struct Node** head, int data) {</br>
+                struct Node* newNode = createNode(data);</br>
+                if (*head == NULL) {</br>
+                    *head = newNode;</br>
+                } else {</br>
+                    struct Node* current = *head;</br>
+                    while (current->next != NULL) {</br>
+                        current = current->next;</br>
+                    }</br>
+                    current->next = newNode;</br>
+                    newNode->prev = current;</br>
+                }</br>
+            }</br>
+            
+            void insertAtBeginning(struct Node** head, int data) {</br>
+                struct Node* newNode = createNode(data);</br>
+                newNode->next = *head;</br>
+                if (*head != NULL) {</br>
+                    (*head)->prev = newNode;</br>
+                }</br>
+                *head = newNode;</br>
+            }</br>
+            
+            void insertBetweenNodes(struct Node* prevNode, int data) {</br>
+                if (prevNode == NULL) {</br>
+                    printf("Previous node cannot be NULL for insertion between nodes.\n");</br>
+                    return;</br>
+                }</br>
+                struct Node* newNode = createNode(data);</br>
+                newNode->prev = prevNode;</br>
+                newNode->next = prevNode->next;</br>
+                if (prevNode->next != NULL) {</br>
+                    prevNode->next->prev = newNode;</br>
+                }</br>
+                prevNode->next = newNode;</br>
+            }</br>
+            
+            void deleteAtEnd(struct Node** head) {</br>
+                if (*head == NULL) {</br>
+                    printf("List is empty. Cannot delete from an empty list.\n");</br>
+                    return;</br>
+                }</br>
+                struct Node* current = *head;</br>
+                while (current->next != NULL) {</br>
+                    current = current->next;</br>
+                }</br>
+                if (current->prev != NULL) {
+                    current->prev->next = NULL;</br>
+                    free(current);</br>
+                } else {</br>
+                    free(current);</br>
+                    *head = NULL;</br>
+                }</br>
+            }</br>
+            
+            void deleteAtBeginning(struct Node** head) {</br>
+                if (*head == NULL) {</br>
+                    printf("List is empty. Cannot delete from an empty list.\n");</br>
+                    return;</br>
+                }</br>
+                struct Node* temp = *head;</br>
+                *head = (*head)->next;</br>
+                if (*head != NULL) {</br>
+                    (*head)->prev = NULL;</br>
+                }</br>
+                free(temp);</br>
+            }</br>
+            
+            void deleteBetweenNodes(struct Node* nodeToDelete) {</br>
+                if (nodeToDelete == NULL) {</br>
+                    printf("Node to delete cannot be NULL for deletion between nodes.\n");</br>
+                    return;</br>
+                }</br>
+                if (nodeToDelete->prev != NULL) {</br>
+                    nodeToDelete->prev->next = nodeToDelete->next;</br>
+                }</br>
+                if (nodeToDelete->next != NULL) {</br>
+                    nodeToDelete->next->prev = nodeToDelete->prev;</br>
+                }</br>
+                free(nodeToDelete);</br>
+            }</br>
+            
+            void display(struct Node* head) {</br>
+                struct Node* current = head;</br>
+                while (current != NULL) {</br>
+                    printf("%d <-> ", current->data);</br>
+                    current = current->next;</br>
+                }</br>
+                printf("NULL\n");</br>
+            }</br>
+            
+            int main() {</br>
+                struct Node* head = NULL;</br>
+                int choice, data;</br>
+            
+                while (1) {</br>
+                    printf("\nDoubly Linked List Operations:\n");</br>
+                    printf("1. Insert at End\n");</br>
+                    printf("2. Insert at Beginning\n");
+                    printf("3. Insert Between Nodes\n");</br>
+                    printf("4. Delete at End\n");</br>
+                    printf("5. Delete at Beginning\n");</br>
+                    printf("6. Delete Between Nodes\n");</br>
+                    printf("7. Display\n");</br>
+                    printf("8. Exit\n");</br>
+                    printf("Enter your choice: ");</br>
+                    scanf("%d", &choice);</br>
+            
+                    switch (choice) {</br>
+                        case 1:</br>
+                            printf("Enter data to insert at the end: ");</br>
+                            scanf("%d", &data);</br>
+                            insertAtEnd(&head, data);</br>
+                            break;</br>
+                        case 2:</br>
+                            printf("Enter data to insert at the beginning: ");</br>
+                            scanf("%d", &data);</br>
+                            insertAtBeginning(&head, data);</br>
+                            break;</br>
+                        case 3:</br>
+                            printf("Enter data to insert: ");</br>
+                            scanf("%d", &data);</br>
+                            printf("Enter data of the node after which to insert: ");</br>
+                            int prevData;</br>
+                            scanf("%d", &prevData);</br>
+                            struct Node* prevNode = head;</br>
+                            while (prevNode != NULL && prevNode->data != prevData) {</br>
+                                prevNode = prevNode->next;</br>
+                            }</br>
+                            insertBetweenNodes(prevNode, data);</br>
+                            break;</br>
+                        case 4:</br>
+                            deleteAtEnd(&head);</br>
+                            break;</br>
+                        case 5:</br>
+                            deleteAtBeginning(&head);</br>
+                            break;</br>
+                        case 6:</br>
+                            printf("Enter data of the node to delete: ");</br>
+                            scanf("%d", &data);</br>
+                            struct Node* nodeToDelete = head;</br>
+                            while (nodeToDelete != NULL && nodeToDelete->data != data) {</br>
+                                nodeToDelete = nodeToDelete->next;</br>
+                            }</br>
+                            deleteBetweenNodes(nodeToDelete);</br>
+                            break;</br>
+                        case 7:</br>
+                            display(head);</br>
+                            break;</br>
+                        case 8:</br>
+                            exit(0);</br>
+                        default:</br>
+                            printf("Invalid choice. Please enter a valid option.\n");</br>
+                    }</br>
+                }</br>
+            
+                return 0;</br>
+            }</br>
+    </p>
+</body>
+</html>

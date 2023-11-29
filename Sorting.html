@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        #include (stdio.h)</br>
+            #include (stdlib.h)</br>
+            
+            // Function prototypes</br>
+            void printArray(int arr[], int size);</br>
+            void quickSort(int arr[], int low, int high);</br>
+            int partition(int arr[], int low, int high);</br>
+            void insertionSort(int arr[], int n);</br>
+            void mergeSort(int arr[], int l, int r);</br>
+            void merge(int arr[], int l, int m, int r);</br>
+            void selectionSort(int arr[], int n);</br>
+            
+            int main() {</br>
+                int choice;</br>
+                int n;</br>
+            
+                // Get the size of the array from the user</br>
+                printf("Enter the number of elements: ");</br>
+                scanf("%d", &n);</br>
+            
+                int arr[n];</br>
+            
+                // Get the array elements from the user</br>
+                printf("Enter %d elements:\n", n);</br>
+                for (int i = 0; i < n; i++) {</br>
+                    scanf("%d", &arr[i]);</br>
+                }</br>
+            
+                // Display the original array</br>
+                printf("Original array: ");</br>
+                printArray(arr, n);</br>
+                while(1){
+                // Get the choice of sorting algorithm from the user</br>
+                printf("\nChoose a sorting algorithm:\n");</br>
+                printf("1. QuickSort\n");</br>
+                printf("2. Insertion Sort\n");</br>
+                printf("3. Merge Sort\n");</br>
+                printf("4. Selection Sort\n");</br>
+                printf("5. Exit\n");</br>
+            
+                printf("Enter your choice (1-4): ");</br>
+                scanf("%d", &choice);</br>
+            </br>
+                // Perform the sorting based on the user's choice</br>
+                switch (choice) {</br>
+                    case 1:</br>
+                        quickSort(arr, 0, n - 1);</br>
+                        printf("Sorted array using QuickSort: ");</br>
+                        break;</br>
+                    case 2:</br>
+                        insertionSort(arr, n);</br>
+                        printf("Sorted array using Insertion Sort: ");</br>
+                        break;</br>
+                    case 3:
+                        mergeSort(arr, 0, n - 1);</br>
+                        printf("Sorted array using Merge Sort: ");
+                        break;</br>
+                    case 4:</br>
+                        selectionSort(arr, n);</br>
+                        printf("Sorted array using Selection Sort: ");</br>
+                        break;</br>
+                    case 5:</br>
+                        exit(0);</br>
+                    default:</br>
+                        printf("Invalid choice\n");</br>
+                        return 1;</br>
+                }</br>
+            
+                // Display the sorted array</br>
+                printArray(arr, n);</br>
+                }</br>
+                return 0;</br>
+            
+            }</br>
+            
+            // Function to print an array</br>
+            void printArray(int arr[], int size) {</br>
+                for (int i = 0; i < size; i++) {</br>
+                    printf("%d ", arr[i]);</br>
+                }</br>
+                printf("\n");</br>
+            }</br>
+            
+            // Function to perform QuickSort</br>
+            void quickSort(int arr[], int low, int high) {</br>
+                if (low < high) {</br>
+                    // Find pivot element such that</br>
+                    // elements smaller than pivot are on the left</br>
+                    // elements greater than pivot are on the right</br>
+                    int pi = partition(arr, low, high);</br>
+            
+                    // Recursively sort the sub-arrays</br>
+                    quickSort(arr, low, pi - 1);</br>
+                    quickSort(arr, pi + 1, high);</br>
+                }</br>
+            }</br>
+            
+            // Function to partition the array for QuickSort</br>
+            int partition(int arr[], int low, int high) {</br>
+                int pivot = arr[high]; // Choose the rightmost element as the pivot</br>
+                int i = low - 1;       // Index of smaller element</br>
+            
+                // Traverse the array and rearrange elements</br>
+                // smaller than pivot are moved to the left</br>
+                // greater than pivot are moved to the right</br>
+                for (int j = low; j <= high - 1; j++) {</br>
+                    if (arr[j] < pivot) {</br>
+                        i++;</br>
+                        // Swap arr[i] and arr[j]</br>
+                        int temp = arr[i];</br>
+                        arr[i] = arr[j];</br>
+                        arr[j] = temp;</br>
+                    }</br>
+                }</br>
+            
+                // Swap arr[i + 1] and arr[high] (pivot)</br>
+                int temp = arr[i + 1];</br>
+                arr[i + 1] = arr[high];</br>
+                arr[high] = temp;</br>
+            
+                return i + 1;</br>
+            }</br>
+            
+            // Function to perform Insertion Sort</br>
+            void insertionSort(int arr[], int n) {</br>
+                for (int i = 1; i < n; i++) {</br>
+                    int key = arr[i];</br>
+                    int j = i - 1;</br>
+            
+                    // Move elements of arr[0..i-1] that are greater than key</br>
+                    // to one position ahead of their current position</br>
+                    while (j >= 0 && arr[j] > key) {</br>
+                        arr[j + 1] = arr[j];</br>
+                        j--;</br>
+                    }
+                    arr[j + 1] = key;</br>
+                }</br>
+            }</br>
+            
+            // Function to perform Merge Sort</br>
+            void mergeSort(int arr[], int l, int r) {</br>
+                if (l < r) {</br>
+                    int m = l + (r - l) / 2; // Calculate mid point of array</br>
+            
+                    // Recursively sort two halves</br>
+                    mergeSort(arr, l, m);</br>
+                    mergeSort(arr, m + 1, r);</br>
+            
+                    // Merge the sorted halves</br>
+                    merge(arr, l, m, r);</br>
+                }</br>
+            }</br>
+            
+            // Function to merge two halves of an array</br>
+            void merge(int arr[], int l, int m, int r) {</br>
+                int i, j, k;</br>
+                int n1 = m - l + 1;</br>
+                int n2 = r - m;</br>
+            </br>
+                // Create temporary arrays</br>
+                int L[n1], R[n2];</br>
+            
+                // Copy data to temporary arrays L[] and R[]</br>
+                for (i = 0; i < n1; i++)</br>
+                    L[i] = arr[l + i];</br>
+                for (j = 0; j < n2; j++)</br>
+                    R[j] = arr[m + 1 + j];</br>
+            
+                // Merge the temporary arrays back into arr[l..r]</br>
+                i = 0;   // Initial index of first subarray</br>
+                j = 0;   // Initial index of second subarray</br>
+                k = l;   // Initial index of merged subarray</br>
+            
+                while (i < n1 && j < n2) {</br>
+                    if (L[i] <= R[j]) {</br>
+                        arr[k] = L[i];</br>
+                        i++;</br>
+                    } else {</br>
+                        arr[k] = R[j];</br>
+                        j++;</br>
+                    }</br>
+                    k++;</br>
+                }</br>
+            
+                // Copy the remaining elements of L[], if there are any</br>
+                while (i < n1) {</br>
+                    arr[k] = L[i];</br>
+                    i++;</br>
+                    k++;</br>
+                }</br>
+            
+                // Copy the remaining elements of R[], if there are any</br>
+                while (j < n2) {</br>
+                    arr[k] = R[j];</br>
+                    j++;</br>
+                    k++;</br>
+                }</br>
+            }</br>
+            
+            // Function to perform Selection Sort</br>
+            void selectionSort(int arr[], int n) {</br>
+                int i, j, min_idx;</br>
+            
+                // One by one move boundary of unsorted subarray</br>
+                for (i = 0; i < n - 1; i++) {</br>
+                    // Find the minimum element in the unsorted array</br>
+                    min_idx = i;</br>
+                    for (j = i + 1; j < n; j++) {</br>
+                        if (arr[j] < arr[min_idx]) {</br>
+                            min_idx = j;</br>
+                        }</br>
+                    }</br>
+                }</br>
+            }</br>
+            
+            
+    </p>
+</body>
+</html>
